@@ -9,64 +9,55 @@
 import SwiftUI
 
 struct ContentView: View {
-    var service:Service
-    var body: some View{
-        ANav(model: service.navi)
-        AList(arr: service.array)
-        
+    var list:[Any] = [T1(),Test()]
+    var body: some View {
+        Text("Hello, world!")
+            .padding()
+        Item(m: list.first)
+        Item(m: list.last)
     }
+}
 
-}
-struct ANav:View{
-    var model:NSObject
+struct Item :View{
+    var m:Any
     var body: some View{
-        if(model is DogModel){
-            let m = model as! DogModel
-            Dog(model: m)
-        }
-    }
-}
-struct AList:View{
-    var arr:[NSObject]
-    var body: some View{
-        List(0..<arr.count){ item in
-            if(arr[item] is DogModel){
-                let m = arr[item] as! DogModel
-                Dog(model: m)
-            }else if(arr[item] is CatModel){
-                let m = arr[item] as! CatModel
-                Cat(model: m)            
-            }
+        if m is Test {
+            let t = m as? Test
+            t?.render
+        }else if m is T1 {
+            let t = m as? T1
+            t?.render
+        }else{
+            BaseView()
         }
     }
 }
 
-
-
-struct Dog:View{
-    var model:DogModel
-    var body: some View{
-        Text("Dog")
+class Test{
+    var render: some View{
+        Text("sdf")
     }
 }
-struct Cat:View{
-    var model:CatModel
-    var body: some View{
-        Text("cat")
+class T1{
+    var render: some View{
+        Text("sdf")
     }
 }
 
-class DogModel:NSObject{
-    
-}
-class CatModel:NSObject{
-    
+
+
+
+
+struct BaseView:View {
+    var body: some View{
+        Text("sdfsdfsf")
+    }
 }
 
-class Service{
-    var array = [DogModel(),CatModel()]
-    var navi = DogModel()
-    func request(){
-        
+
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
     }
 }
